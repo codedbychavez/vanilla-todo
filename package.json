@@ -1,0 +1,11 @@
+{
+  "name": "vanilla-todo",
+  "version": "1.0.0",
+  "description": "A todo application made with vanilla JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chavez Harris",
+  "license": "ISC"
+}
