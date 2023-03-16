@@ -1,11 +1,18 @@
 {
-  "name": "vanilla-todo",
-  "version": "1.0.0",
-  "description": "A todo application made with vanilla JavaScript",
-  "main": "index.js",
+  "name": "vue3-todo",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "author": "Chavez Harris",
-  "license": "ISC"
+  "dependencies": {
+    "pinia": "^2.0.32",
+    "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.1.4"
+  }
 }
