@@ -1,15 +1,14 @@
 <template>
   <div class="todo-item">
     <div class="todo-status">
-      <input type="checkbox" v-model="isChecked" @change="$emit('todoStatusChange', isChecked, id)" />
+      <input type="checkbox" v-model="isTodoCompleted" @change="$emit('todoStatusChange', isTodoCompleted, id)" />
     </div>
-    <div class="todo-title" :class="isChecked && 'strikethrough'">{{ title }}</div>
+    <div class="todo-title" :class="isTodoCompleted && 'strikethrough'">{{ title }}</div>
   </div>
 </template>
 
 <script>
 export default {
-  // TODO: Look at: https://vuejs.org/guide/components/props.html#one-way-data-flow
   props: {
     id: Number,
     title: String,
@@ -17,7 +16,7 @@ export default {
   },
   data() {
     return {
-      isChecked: this.isComplete,
+      isTodoCompleted: this.isComplete,
     }
 },
   methods: {
