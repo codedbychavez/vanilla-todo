@@ -3,6 +3,9 @@
     <!-- Main stuff goes here -->
     <AppHeader />
     <!-- Add todo form -->
+    <div class="todo-form-container">
+      <TodoForm />
+    </div>
     <div class="todos-container">
       <div class="todo-item-wrapper" v-for="todo of todos">
         <TodoItem
@@ -19,10 +22,12 @@
 <script>
 import TodoItem from "./components/TodoItem.vue";
 import AppHeader from "./components/AppHeader.vue";
+import TodoForm from "./components/TodoForm.vue";
 export default {
   components: {
     TodoItem,
     AppHeader,
+    TodoForm,
   },
   data() {
     return {
@@ -60,6 +65,11 @@ export default {
 </script>
 
 <style>
+
+.todo-form-container {
+  
+}
+
 .todos-container {
   @apply border p-4;
 }
