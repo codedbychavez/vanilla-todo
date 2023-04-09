@@ -1,10 +1,15 @@
 <template>
-  <form @submit.prevent="handleFormSubmit" class="todo-form">
+  <form ref="todoForm" @submit.prevent="handleFormSubmit" class="todo-form">
     <div class="form-element">
-      <input v-model="formData.isComplete" type="checkbox" />
+      <input v-model="isComplete" type="checkbox" />
     </div>
     <div class="form-element">
-      <input v-model="formData.title" class="title-input" type="text" placeholder="title" />
+      <input
+        v-model="title"
+        class="title-input"
+        type="text"
+        placeholder="title"
+      />
     </div>
     <div class="form-element">
       <button class="submit-button" type="submit">Add</button>
@@ -13,17 +18,24 @@
 </template>
 
 <script>
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
+
+class Todo {
+  constructor(id, title, isComplete) {
+    this.id = id;
+    this.title = title;
+    this.isComplete = isComplete;
+  }
+}
 
 export default {
+  emits: ["addTodo"],
   data() {
     return {
-      formData: {
-        id: '',
-        title: '',
-        isComplete: false,
-      }
-    }
+      id: "",
+      title: "",
+      isComplete: false,
+    };
   },
   methods: {
     generateRandomId() {
@@ -31,12 +43,13 @@ export default {
     },
 
     handleFormSubmit() {
-      this.formData.id = this.generateRandomId();
-      console.log(this.formData);
-    }
-  }
-}
-
+      this.id = this.generateRandomId();
+      const todo = new Todo(this.id, this.title, this.isComplete);
+      this.$emit("addTodo", todo);
+      this.$refs.todoForm.reset();
+    },
+  },
+};
 </script>
 
 <style>

@@ -4,15 +4,14 @@
     <AppHeader />
     <!-- Add todo form -->
     <div class="todo-form-container">
-      <TodoForm />
+      <TodoForm @add-todo="handleAddTodo" />
     </div>
     <div class="todos-container">
       <div class="todo-item-wrapper" v-for="todo of todos">
         <TodoItem
-          :id="todo.id"
-          :title="todo.title"
-          :is-complete="todo.isComplete"
+          :todo="todo"
           @todo-status-change="handleTodoStatusChange"
+          @todo-delete="handleTodoDelete"
         />
       </div>
     </div>
@@ -34,12 +33,12 @@ export default {
       todos: [
         {
           id: 1,
-          title: "Some task thats needs to be done",
+          title: "This is task one",
           isComplete: false,
         },
         {
           id: 2,
-          title: "Some task thats needs to be done",
+          title: "This is task two",
           isComplete: true,
         },
       ],
@@ -50,24 +49,35 @@ export default {
       this.todos[index].isComplete = status;
     },
 
-    handleTodoStatusChange(status, id) {
-      // Filter the array to the individual todo item:
-      let todoToUpdate = this.todos.filter((todo) => todo.id === id);
+    getIndexOfTodo(id) {
+      const todoToLookFor = this.todos.filter((todo) => todo.id == id);
+      return this.todos.indexOf(todoToLookFor[0]);
+    },
 
+    handleTodoStatusChange(id, status) {
       // Find the idex of the todo
-      let indexOfTodoToUpdate = this.todos.indexOf(todoToUpdate[0]);
+      const indexOfTodoToUpdate = this.getIndexOfTodo(id);
 
       // Update the todo
       this.updateTodo(status, indexOfTodoToUpdate);
+    },
+    addTodo(todoToAdd) {
+      this.todos.push(todoToAdd);
+      console.log(this.todos);
+    },
+    handleAddTodo(todoToAdd) {
+      this.addTodo(todoToAdd);
+    },
+    handleTodoDelete(id) {
+      const indexOfTodoToDelete = this.getIndexOfTodo(id);
+      this.todos.splice(indexOfTodoToDelete, 1);
     },
   },
 };
 </script>
 
 <style>
-
 .todo-form-container {
-  
 }
 
 .todos-container {
