@@ -1,8 +1,6 @@
 <template>
   <main>
-    <!-- Main stuff goes here -->
     <AppHeader />
-    <!-- Add todo form -->
     <div class="todo-form-container">
       <TodoForm @add-todo="handleAddTodo" />
     </div>
