@@ -40,7 +40,7 @@ export default {
 
 <style>
 .todo-item {
-  @apply flex bg-slate-100 p-4 w-3/4 mx-auto;
+  @apply flex bg-slate-100 p-4 md:w-3/4 mx-auto;
 }
 
 .todo-status {

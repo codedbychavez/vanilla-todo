@@ -54,11 +54,11 @@ export default {
 
 <style>
 .todo-form {
-  @apply flex gap-4 py-4 items-center w-max mx-auto;
+  @apply flex gap-4 py-4 items-center justify-center;
 }
 
 .title-input {
-  @apply border py-1 px-2 w-96;
+  @apply border py-1 px-2 lg:w-96 w-full;
 }
 
 .submit-button {
