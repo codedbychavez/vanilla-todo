@@ -5,84 +5,63 @@
       <TodoForm @add-todo="handleAddTodo" />
     </div>
     <div class="todos-container">
-      <div class="todo-item-wrapper" v-for="todo of todos">
-        <TodoItem
-          :todo="todo"
-          @todo-status-change="handleTodoStatusChange"
-          @todo-delete="handleTodoDelete"
-        />
+      <div class="todo-item-wrapper" v-for="todo of state.todos">
+        <TodoItem :todo="todo" @todo-status-change="handleTodoStatusChange" @todo-delete="handleTodoDelete" />
       </div>
     </div>
   </main>
 </template>
 
-<script>
+<script setup lang="ts">
 import TodoItem from "./components/TodoItem.vue";
 import AppHeader from "./components/AppHeader.vue";
 import TodoForm from "./components/TodoForm.vue";
-export default {
-  components: {
-    TodoItem,
-    AppHeader,
-    TodoForm,
-  },
-  data() {
-    return {
-      todos: [
-        {
-          id: 1,
-          title: "This is task one",
-          isComplete: false,
-        },
-        {
-          id: 2,
-          title: "This is task two",
-          isComplete: true,
-        },
-      ],
-    };
-  },
-  methods: {
-    updateTodo(status, index) {
-      this.todos[index].isComplete = status;
-    },
+import { reactive } from "vue";
+import { Todo } from './Models'
 
-    getIndexOfTodo(id) {
-      const todoToLookFor = this.todos.filter((todo) => todo.id == id);
-      return this.todos.indexOf(todoToLookFor[0]);
-    },
+const state = reactive({
+  todos: [] as Todo[],
+});
 
-    handleTodoStatusChange(id, status) {
-      // Find the idex of the todo
-      const indexOfTodoToUpdate = this.getIndexOfTodo(id);
-
-      // Update the todo
-      this.updateTodo(status, indexOfTodoToUpdate);
-    },
-    addTodo(todoToAdd) {
-      this.todos.push(todoToAdd);
-      console.log(this.todos);
-    },
-    handleAddTodo(todoToAdd) {
-      this.addTodo(todoToAdd);
-    },
-    handleTodoDelete(id) {
-      const indexOfTodoToDelete = this.getIndexOfTodo(id);
-      this.todos.splice(indexOfTodoToDelete, 1);
-    },
-  },
+const updateTodo = (status: boolean, index: number) => {
+  state.todos[index].status = status;
 };
+
+const getIndexOfTodo = (id: string) => {
+  const todoIndex = state.todos.findIndex((todo: Todo) => todo.id == id);
+  return todoIndex;
+};
+
+
+const handleTodoStatusChange = (id: string, status: boolean) => {
+  // Find the idex of the todo
+  const indexOfTodoToUpdate = getIndexOfTodo(id);
+
+  // Update the todo
+  updateTodo(status, indexOfTodoToUpdate);
+};
+
+const addTodo = (todoToAdd: Todo) => {
+  state.todos.push(todoToAdd);
+};
+
+const handleAddTodo = (todoToAdd: Todo) => {
+  addTodo(todoToAdd);
+};
+
+const handleTodoDelete = (id: string) => {
+  const indexOfTodoToDelete = getIndexOfTodo(id);
+  state.todos.splice(indexOfTodoToDelete, 1);
+};
+
 </script>
 
 <style>
-.todo-form-container {
-}
-
 .todos-container {
-  @apply border p-4;
+  @apply p-4;
 }
 
-.todo-item-wrapper + .todo-item-wrapper {
+.todo-item-wrapper+.todo-item-wrapper {
   @apply mt-4;
 }
 </style>
